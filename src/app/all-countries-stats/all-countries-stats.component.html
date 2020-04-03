@@ -1,0 +1,191 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">Coronavirus Pandemic In World</h6>
+        </div>
+        <div class="col-auto ml-auto mr-0 text-right">
+          <form class="form-inline mr-sm-3" id="navbar-search-main" (ngSubmit)="searchWorldStats()">
+
+            <div class="form-group mb-0">
+              <div class="input-group input-group-merge input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+                <input name="inputContryControl" [(ngModel)]="inputCountry" class="form-control"
+                  placeholder="Search Country" type="text">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-secondary mx-2">Search</button>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-md-6">
+          <div class="card card-stats">
+            <!-- Card body -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Total Cases</h5>
+                  <span
+                    class="h2 font-weight-bold mb-0 font-size-24"><strong>{{shortWorldStats?.Confirmed}}</strong></span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                    <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+          <div class="card card-stats">
+            <!-- Card body -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Active Cases</h5>
+                  <span
+                    class="h2 font-weight-bold mb-0 font-size-24"><strong>{{shortWorldStats?.Active}}</strong></span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                    <i class="fa fa-medkit" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+          <div class="card card-stats">
+            <!-- Card body -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Recoveries</h5>
+                  <span
+                    class="h2 font-weight-bold mb-0 font-size-24"><strong>{{shortWorldStats?.Recovered}}</strong></span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                    <i class="fa fa-snowflake" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+          <div class="card card-stats">
+            <!-- Card body -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Total Deaths</h5>
+                  <span
+                    class="h2 font-weight-bold mb-0 font-size-24"><strong>{{shortWorldStats?.Deaths}}</strong></span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row align-items-center py-4">
+        <div class="col">
+          <div class="card">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">Coronavirus statistics </h3>
+                </div>
+
+              </div>
+            </div>
+            <div class="table-responsive" data-toggle="list"
+              data-list-values='["country", "totalCases", "totalDeaths", "totalRecovered", "activeCases", "criticalCases"]'>
+              <!-- Projects table -->
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" class="sort" data-sort="country">Country</th>
+                    <th scope="col" class="sort" data-sort="totalCases">Total Cases</th>
+                    <th scope="col">New Cases</th>
+                    <th scope="col" class="sort" data-sort="totalDeaths">Total Deaths</th>
+                    <th scope="col">New Deaths</th>
+                    <th scope="col" class="sort" data-sort="totalRecovered">Total Recovered</th>
+                    <th scope="col" class="sort" data-sort="activeCases">Active Cases</th>
+                    <th scope="col" class="sort" data-sort="criticalCases">Critical Cases</th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <ng-container *ngFor="let countryStat of worldStats">
+                    <tr>
+                      <th scope="row">
+                        <span class="country font-size-18">
+                          {{countryStat.country}}
+                        </span>
+                      </th>
+                      <td>
+                        <span class="totalCases ">{{countryStat.cases.total}}
+                        </span>
+                      </td>
+                      <td>
+                        <ng-container *ngIf="!!countryStat.cases.new"><i class="fas fa-arrow-up text-danger mr-3 "></i>
+                          <span class="">{{countryStat.cases.new.substr(1,countryStat.cases.new.length)}}</span>
+                        </ng-container>
+                        <ng-container *ngIf="countryStat.cases.new == null">-</ng-container>
+
+
+                      </td>
+                      <td>
+                        <span class="totalDeaths ">{{countryStat.deaths.total}}
+                        </span>
+                      </td>
+                      <td>
+                        <ng-container *ngIf="!!countryStat.deaths.new"><i class="fas fa-arrow-up text-danger mr-3"></i>
+                          <span class="">
+                            {{countryStat.deaths.new.substr(1,countryStat.deaths.new.length)}}</span>
+
+                        </ng-container>
+                        <ng-container *ngIf="countryStat.deaths.new == null">-</ng-container>
+                      </td>
+                      <td class="totalRecovered ">
+                        <span class=""> {{countryStat.cases.recovered}}
+                        </span>
+                      </td>
+                      <td class="activeCases ">
+                        <span class=""> {{countryStat.cases.active}}
+                        </span>
+                      </td>
+                      <td class="criticalCases ">
+                        <span class=""> {{countryStat.cases.critical}}
+                        </span>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
